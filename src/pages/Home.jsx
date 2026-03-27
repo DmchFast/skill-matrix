@@ -1,9 +1,17 @@
+import { Card, Typography } from 'antd';
+
+const { Title, Text } = Typography;
+
 const Home = () => {
    return (
-      <div style={{ padding: '24px' }}>
-         <h1>Главная страница</h1>
-         <p>Добро пожаловать в SkillsMatrix!</p>
-      </div>
+      <>
+         <Title level={3} style={{ color: '#2B3743', marginTop: 0, marginBottom: '24px' }}>
+            Библиотека навыков
+         </Title>
+         <Card style={{ borderRadius: 16 }}>
+            <Text>...</Text>
+         </Card>
+      </>
    );
 };
 
