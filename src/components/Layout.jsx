@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Layout as AntLayout, Menu, Button, Typography, Modal, Form, Input, message, Avatar } from 'antd';
 import {
    HomeOutlined,
@@ -95,7 +95,7 @@ const Layout = () => {
                   </Title>
                </div>
 
-               <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+               <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   {!user ? (
                      <>
                         <Button
@@ -113,31 +113,40 @@ const Layout = () => {
                      </>
                   ) : (
                      <>
-                        <Link to="/my-profile">
-                           <Avatar icon={<UserOutlined />} style={{ backgroundColor: '#3D8086', cursor: 'pointer' }} />
-                        </Link>
-                        <Button icon={<LogoutOutlined />} onClick={handleLogout} type="text" style={{ color: '#fff', fontSize: '20px' }} />
+                        <Avatar icon={<UserOutlined />} style={{ backgroundColor: '#3D8086' }} />
+                        <Button
+                           icon={<LogoutOutlined />}
+                           onClick={handleLogout}
+                           type="text"
+                           style={{ color: '#fff', fontSize: '20px' }}
+                        />
                      </>
                   )}
                </div>
             </Header>
 
             <Content
-               className="custom-scroll"
                style={{
                   background: '#F1F2F6',
                   padding: '30px 40px',
                   overflowY: 'auto',
                   height: '100%',
                }}
+               className="custom-scroll"
             >
                <Outlet />
             </Content>
          </AntLayout>
 
-         <Modal title="Вход" open={isLoginModalOpen} onCancel={() => setIsLoginModalOpen(false)} footer={null} centered>
+         <Modal
+            title="Вход"
+            open={isLoginModalOpen}
+            onCancel={() => setIsLoginModalOpen(false)}
+            footer={null}
+            centered
+         >
             <Form form={loginForm} onFinish={handleLogin} layout="vertical">
-               <Form.Item name="email" label="Email" rules={[{ required: true }]}>
+               <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
                   <Input />
                </Form.Item>
                <Form.Item name="password" label="Пароль" rules={[{ required: true }]}>
@@ -151,12 +160,18 @@ const Layout = () => {
             </Form>
          </Modal>
 
-         <Modal title="Регистрация" open={isRegisterModalOpen} onCancel={() => setIsRegisterModalOpen(false)} footer={null} centered>
+         <Modal
+            title="Регистрация"
+            open={isRegisterModalOpen}
+            onCancel={() => setIsRegisterModalOpen(false)}
+            footer={null}
+            centered
+         >
             <Form form={registerForm} onFinish={handleRegister} layout="vertical">
                <Form.Item name="username" label="Имя пользователя" rules={[{ required: true }]}>
                   <Input />
                </Form.Item>
-               <Form.Item name="email" label="Email" rules={[{ required: true }]}>
+               <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
                   <Input />
                </Form.Item>
                <Form.Item name="password" label="Пароль" rules={[{ required: true, min: 6 }]}>

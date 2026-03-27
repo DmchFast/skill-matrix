@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
-// Временные данные навыков
 const skills = [
    { id: 1, title: 'React Basics', description: 'Изучите основы React: компоненты, состояние, хуки.', views: 1250 },
    { id: 2, title: 'UI/UX Fundamentals', description: 'Основы проектирования пользовательских интерфейсов.', views: 890 },

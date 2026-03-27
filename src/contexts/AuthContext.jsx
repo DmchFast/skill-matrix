@@ -12,22 +12,15 @@ export const AuthProvider = ({ children }) => {
       }
    }, []);
 
-   // Данные без валидации
    const login = async (email, password) => {
-      const mockUser = {
-         id: 1,
-         username: email.split('@')[0],
-         email: email,
-         role: 'user',
-         bio: '',
-         followers: [],
-         following: [],
-         completedSkills: [],
-         createdAt: new Date().toISOString(),
-      };
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      return true;
+      // Тестовый пользователь
+      if (email === 'admin@mail.ru' && password === '123') {
+         const userData = { id: 1, username: 'admin', email, role: 'admin' };
+         setUser(userData);
+         localStorage.setItem('user', JSON.stringify(userData));
+         return true;
+      }
+      return false;
    };
 
    const register = async (username, email, password) => {
@@ -39,8 +32,6 @@ export const AuthProvider = ({ children }) => {
          bio: '',
          followers: [],
          following: [],
-         completedSkills: [],
-         createdAt: new Date().toISOString(),
       };
       setUser(newUser);
       localStorage.setItem('user', JSON.stringify(newUser));
@@ -52,15 +43,8 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('user');
    };
 
-   const updateCurrentUser = (updatedData) => {
-      if (!user) return;
-      const newUser = { ...user, ...updatedData };
-      setUser(newUser);
-      localStorage.setItem('user', JSON.stringify(newUser));
-   };
-
    return (
-      <AuthContext.Provider value={{ user, login, register, logout, updateCurrentUser }}>
+      <AuthContext.Provider value={{ user, login, register, logout }}>
          {children}
       </AuthContext.Provider>
    );
