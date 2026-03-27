@@ -1,11 +1,7 @@
-import { Button } from 'antd';
+import Layout from './components/Layout';
 
 function App() {
-  return (
-    <div style={{ padding: 24 }}>
-      <Button type="primary">кнопка Ant Design</Button>
-    </div>
-  );
+  return <Layout />;
 }
 
 export default App;
