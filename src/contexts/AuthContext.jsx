@@ -12,18 +12,38 @@ export const AuthProvider = ({ children }) => {
       }
    }, []);
 
+   // Данные без валидации
    const login = async (email, password) => {
-      // Проверка
-      const mockUser = { id: 1, username: 'user', email, role: 'user' };
+      const mockUser = {
+         id: 1,
+         username: email.split('@')[0],
+         email: email,
+         role: 'user',
+         bio: '',
+         followers: [],
+         following: [],
+         completedSkills: [],
+         createdAt: new Date().toISOString(),
+      };
       setUser(mockUser);
       localStorage.setItem('user', JSON.stringify(mockUser));
       return true;
    };
 
    const register = async (username, email, password) => {
-      const mockUser = { id: Date.now(), username, email, role: 'user' };
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      const newUser = {
+         id: Date.now(),
+         username,
+         email,
+         role: 'user',
+         bio: '',
+         followers: [],
+         following: [],
+         completedSkills: [],
+         createdAt: new Date().toISOString(),
+      };
+      setUser(newUser);
+      localStorage.setItem('user', JSON.stringify(newUser));
       return true;
    };
 
