@@ -1,12 +1,11 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { Layout as AntLayout, Menu, Button, Typography, ConfigProvider } from 'antd';
+import { Layout as AntLayout, Menu, Button, Typography } from 'antd';
 import {
    HomeOutlined,
    SearchOutlined,
    UserOutlined,
    LogoutOutlined,
 } from '@ant-design/icons';
-import { useState } from 'react';
 
 const { Header, Sider, Content } = AntLayout;
 const { Title, Text } = Typography;
@@ -15,7 +14,6 @@ const Layout = () => {
    const navigate = useNavigate();
    const location = useLocation();
 
-   // Пункты меню (пока без авторизации)
    const menuItems = [
       { key: '/', icon: <HomeOutlined />, label: 'Главная' },
       { key: '/profiles', icon: <SearchOutlined />, label: 'Пользователи' },
@@ -26,7 +24,7 @@ const Layout = () => {
          <Sider width={240} style={{ background: '#2B3743' }}>
             <div style={{ padding: '24px 20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                <HomeOutlined style={{ color: '#fff', fontSize: '24px' }} />
-               <Text style={{ color: '#fff', fontSize: '18px', fontWeight: 'bold' }}>SkillsMatrix</Text>
+               <Text style={{ color: '#fff', fontSize: '18px', fontWeight: 'bold' }}>SkillMatrix</Text>
             </div>
 
             <Menu
