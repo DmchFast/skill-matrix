@@ -41,7 +41,9 @@ const EditProfile = () => {
                }}
                onFinish={onFinish}
             >
-               <Form.Item name="username" label="Имя пользователя" rules={[{ required: true, message: 'Введите имя пользователя' }]}>
+               <Form.Item name="username" 
+               label="Имя пользователя" 
+               rules={[{ required: true, message: 'Введите имя пользователя' }]}>
                   <Input />
                </Form.Item>
                <Form.Item name="bio" label="О себе">
