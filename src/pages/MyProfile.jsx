@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Avatar, Typography, Button, List, Tag } from 'antd';
+import { Card, Avatar, Typography, Button, List, Tag, message } from 'antd';
 import { UserOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { DataContext } from '../contexts/DataContext';
 import { AuthContext } from '../contexts/AuthContext';
@@ -15,16 +15,23 @@ const MyProfile = () => {
 
    if (!profileUser) return <div>Профиль не найден</div>;
 
-   // Пройденные навыки или поытки
+   const handleTakeTest = (skill) => {
+      const userAttempts = skill.attempts.filter(a => a.userId === authUser.id).length;
+      const maxAttempts = skill.maxAttempts || 1;
+      if (userAttempts >= maxAttempts) {
+         message.warning(`Вы уже использовали все попытки (всего ${maxAttempts})  для этого теста`);
+         return;
+      }
+      navigate(`/skills/${skill.id}/test`);
+   };
+
    const completedSkills = skills.filter(skill =>
-      skill.attempts?.some(attempt => attempt.userId === profileUser.id)
+      skill.attempts.some(attempt => attempt.userId === profileUser.id)
    );
 
    return (
       <div>
-         <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>
-            Назад
-         </Button>
+         <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>Назад</Button>
          <Card style={{ borderRadius: 16 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
                <Avatar size={100} icon={<UserOutlined />} style={{ backgroundColor: '#4D8AF1' }} />
@@ -41,7 +48,7 @@ const MyProfile = () => {
                </div>
             </div>
             <div style={{ marginTop: 24 }}>
-               <Button type="primary" onClick={() => navigate('/edit-profile')} style={{ background: '#4D8AF1' }}>
+               <Button type="primary" onClick={() => navigate('/edit-profile')} style={{ background: '#E48910' }}>
                   Редактировать профиль
                </Button>
             </div>
@@ -51,9 +58,15 @@ const MyProfile = () => {
             <List
                dataSource={completedSkills}
                renderItem={skill => {
-                  const attempt = skill.attempts?.find(a => a.userId === profileUser.id);
+                  const attempt = skill.attempts.find(a => a.userId === profileUser.id);
                   return (
-                     <List.Item>
+                     <List.Item
+                        actions={[
+                           <Button type="link" onClick={() => handleTakeTest(skill)}>
+                              Пройти тест
+                           </Button>
+                        ]}
+                     >
                         <div>
                            <Text strong>{skill.title}</Text>
                            {attempt && (
