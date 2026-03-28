@@ -23,8 +23,41 @@ export const DataProvider = ({ children }) => {
       setUsers(prev => prev.map(u => u.id === id ? { ...u, ...updated } : u));
    };
 
+   const followUser = (currentUserId, targetUserId) => {
+      setUsers(prev => prev.map(u => {
+         if (u.id === targetUserId) {
+            const followers = u.followers.includes(currentUserId) ? u.followers : [...u.followers, currentUserId];
+            return { ...u, followers };
+         }
+         if (u.id === currentUserId) {
+            const following = u.following.includes(targetUserId) ? u.following : [...u.following, targetUserId];
+            return { ...u, following };
+         }
+         return u;
+      }));
+   };
+
+   const unfollowUser = (currentUserId, targetUserId) => {
+      setUsers(prev => prev.map(u => {
+         if (u.id === targetUserId) {
+            const followers = u.followers.filter(id => id !== currentUserId);
+            return { ...u, followers };
+         }
+         if (u.id === currentUserId) {
+            const following = u.following.filter(id => id !== targetUserId);
+            return { ...u, following };
+         }
+         return u;
+      }));
+   };
+
    return (
-      <DataContext.Provider value={{ skills, users, addSkill, getSkill, updateSkill, updateUser }}>
+      <DataContext.Provider value={{
+         skills, users,
+         addSkill, getSkill, updateSkill,
+         updateUser,
+         followUser, unfollowUser,
+      }}>
          {children}
       </DataContext.Provider>
    );
