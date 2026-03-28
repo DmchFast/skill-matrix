@@ -8,7 +8,9 @@ import EditProfile from './pages/EditProfile';
 import SkillDetail from './pages/SkillDetail';
 import CreateSkill from './pages/CreateSkill';
 import TakeTest from './pages/TakeTest';
+import AdminPanel from './pages/AdminPanel';
 import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
   return (
@@ -37,6 +39,11 @@ function App() {
           <PrivateRoute>
             <TakeTest />
           </PrivateRoute>
+        } />
+        <Route path="admin" element={
+          <AdminRoute>
+            <AdminPanel />
+          </AdminRoute>
         } />
       </Route>
     </Routes>

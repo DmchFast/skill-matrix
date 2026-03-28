@@ -19,8 +19,16 @@ export const DataProvider = ({ children }) => {
       setSkills(prev => prev.map(s => s.id === id ? { ...s, ...updated } : s));
    };
 
+   const deleteSkill = (id) => {
+      setSkills(prev => prev.filter(s => s.id !== id));
+   };
+
    const updateUser = (id, updated) => {
       setUsers(prev => prev.map(u => u.id === id ? { ...u, ...updated } : u));
+   };
+
+   const deleteUser = (id) => {
+      setUsers(prev => prev.filter(u => u.id !== id));
    };
 
    const followUser = (currentUserId, targetUserId) => {
@@ -54,8 +62,8 @@ export const DataProvider = ({ children }) => {
    return (
       <DataContext.Provider value={{
          skills, users,
-         addSkill, getSkill, updateSkill,
-         updateUser,
+         addSkill, getSkill, updateSkill, deleteSkill,
+         updateUser, deleteUser,
          followUser, unfollowUser,
       }}>
          {children}

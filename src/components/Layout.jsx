@@ -6,6 +6,7 @@ import {
    UserOutlined,
    LogoutOutlined,
    PlusOutlined,
+   RadarChartOutlined,
 } from '@ant-design/icons';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
@@ -33,6 +34,9 @@ const Layout = () => {
       items.push({ key: '/profiles', icon: <SearchOutlined />, label: 'Пользователи' });
       if (user) {
          items.push({ key: '/create-skill', icon: <PlusOutlined />, label: 'Создать навык' });
+      }
+      if (user?.role === 'admin') {
+         items.push({ key: '/admin', icon: <RadarChartOutlined />, label: 'Админка' });
       }
       return items;
    };
