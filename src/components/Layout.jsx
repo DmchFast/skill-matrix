@@ -22,11 +22,17 @@ const Layout = () => {
    const [loginForm] = Form.useForm();
    const [registerForm] = Form.useForm();
 
-   const menuItems = [
-      { key: '/', icon: <HomeOutlined />, label: 'Главная' },
-      { key: '/create-skill', icon: <PlusOutlined />, label: 'Создать навык' },
-      { key: '/profiles', icon: <SearchOutlined />, label: 'Пользователи' },
-   ];
+   // Формируем пункты меню в зависимости от авторизации
+   const getMenuItems = () => {
+      const items = [
+         { key: '/', icon: <HomeOutlined />, label: 'Главная' },
+         { key: '/profiles', icon: <SearchOutlined />, label: 'Пользователи' },
+      ];
+      if (user) {
+         items.splice(1, 0, { key: '/create-skill', icon: <PlusOutlined />, label: 'Создать навык' });
+      }
+      return items;
+   };
 
    const handleLogin = async (values) => {
       const success = await login(values.email, values.password);
@@ -68,7 +74,7 @@ const Layout = () => {
                theme="dark"
                mode="inline"
                selectedKeys={[location.pathname]}
-               items={menuItems}
+               items={getMenuItems()}
                onClick={({ key }) => navigate(key)}
                style={{ borderRight: 0 }}
             />

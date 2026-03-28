@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Profiles from './pages/Profiles';
 import SkillDetail from './pages/SkillDetail';
 import CreateSkill from './pages/CreateSkill';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
@@ -12,7 +13,14 @@ function App() {
         <Route index element={<Home />} />
         <Route path="profiles" element={<Profiles />} />
         <Route path="skills/:id" element={<SkillDetail />} />
-        <Route path="create-skill" element={<CreateSkill />} />
+        <Route
+          path="create-skill"
+          element={
+            <PrivateRoute>
+              <CreateSkill />
+            </PrivateRoute>
+          }
+        />
       </Route>
     </Routes>
   );
