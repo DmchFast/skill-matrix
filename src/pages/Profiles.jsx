@@ -42,6 +42,7 @@ const Profiles = () => {
                            size={80}
                            icon={<UserOutlined />}
                            style={{
+                              borderRadius: '100%',
                               margin: '24px auto 0',
                               backgroundColor: '#4D8AF1',
                               display: 'flex',
