@@ -26,10 +26,13 @@ const Layout = () => {
    const getMenuItems = () => {
       const items = [
          { key: '/', icon: <HomeOutlined />, label: 'Главная' },
-         { key: '/profiles', icon: <SearchOutlined />, label: 'Пользователи' },
       ];
       if (user) {
-         items.splice(1, 0, { key: '/create-skill', icon: <PlusOutlined />, label: 'Создать навык' });
+         items.push({ key: '/my-profile', icon: <UserOutlined />, label: 'Мой профиль' });
+      }
+      items.push({ key: '/profiles', icon: <SearchOutlined />, label: 'Пользователи' });
+      if (user) {
+         items.push({ key: '/create-skill', icon: <PlusOutlined />, label: 'Создать навык' });
       }
       return items;
    };

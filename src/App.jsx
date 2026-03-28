@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Profiles from './pages/Profiles';
 import ProfileDetail from './pages/ProfileDetail';
+import MyProfile from './pages/MyProfile';
 import SkillDetail from './pages/SkillDetail';
 import CreateSkill from './pages/CreateSkill';
 import TakeTest from './pages/TakeTest';
@@ -15,23 +16,22 @@ function App() {
         <Route index element={<Home />} />
         <Route path="profiles" element={<Profiles />} />
         <Route path="profiles/:id" element={<ProfileDetail />} />
+        <Route path="my-profile" element={
+          <PrivateRoute>
+            <MyProfile />
+          </PrivateRoute>
+        } />
         <Route path="skills/:id" element={<SkillDetail />} />
-        <Route
-          path="create-skill"
-          element={
-            <PrivateRoute>
-              <CreateSkill />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="skills/:id/test"
-          element={
-            <PrivateRoute>
-              <TakeTest />
-            </PrivateRoute>
-          }
-        />
+        <Route path="create-skill" element={
+          <PrivateRoute>
+            <CreateSkill />
+          </PrivateRoute>
+        } />
+        <Route path="skills/:id/test" element={
+          <PrivateRoute>
+            <TakeTest />
+          </PrivateRoute>
+        } />
       </Route>
     </Routes>
   );
