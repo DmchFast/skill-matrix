@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Profiles from './pages/Profiles';
 import ProfileDetail from './pages/ProfileDetail';
 import MyProfile from './pages/MyProfile';
+import EditProfile from './pages/EditProfile';
 import SkillDetail from './pages/SkillDetail';
 import CreateSkill from './pages/CreateSkill';
 import TakeTest from './pages/TakeTest';
@@ -19,6 +20,11 @@ function App() {
         <Route path="my-profile" element={
           <PrivateRoute>
             <MyProfile />
+          </PrivateRoute>
+        } />
+        <Route path="edit-profile" element={
+          <PrivateRoute>
+            <EditProfile />
           </PrivateRoute>
         } />
         <Route path="skills/:id" element={<SkillDetail />} />

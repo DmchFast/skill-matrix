@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import { mockUsers } from '../mockData';
 
 export const AuthContext = createContext();
 
@@ -13,28 +14,35 @@ export const AuthProvider = ({ children }) => {
    }, []);
 
    const login = async (email, password) => {
-      // Тестовый пользователь
-      if (email === 'admin@mail.ru' && password === '123') {
-         const userData = { id: 1, username: 'admin', email, role: 'admin' };
-         setUser(userData);
-         localStorage.setItem('user', JSON.stringify(userData));
+      const foundUser = mockUsers.find(u => u.email === email && u.password === password);
+      if (foundUser) {
+         const { password: _, ...userWithoutPassword } = foundUser;
+         setUser(userWithoutPassword);
+         localStorage.setItem('user', JSON.stringify(userWithoutPassword));
          return true;
       }
       return false;
    };
 
    const register = async (username, email, password) => {
+      if (mockUsers.some(u => u.email === email)) return false;
       const newUser = {
          id: Date.now(),
          username,
          email,
+         password,
          role: 'user',
          bio: '',
+         avatar: null,
          followers: [],
          following: [],
+         completedSkills: [],
+         createdAt: new Date().toISOString(),
       };
-      setUser(newUser);
-      localStorage.setItem('user', JSON.stringify(newUser));
+      mockUsers.push(newUser);
+      const { password: _, ...userWithoutPassword } = newUser;
+      setUser(userWithoutPassword);
+      localStorage.setItem('user', JSON.stringify(userWithoutPassword));
       return true;
    };
 
@@ -43,8 +51,19 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('user');
    };
 
+   const updateCurrentUser = (updatedData) => {
+      if (!user) return;
+      const newUser = { ...user, ...updatedData };
+      setUser(newUser);
+      localStorage.setItem('user', JSON.stringify(newUser));
+      const index = mockUsers.findIndex(u => u.id === user.id);
+      if (index !== -1) {
+         mockUsers[index] = { ...mockUsers[index], ...updatedData };
+      }
+   };
+
    return (
-      <AuthContext.Provider value={{ user, login, register, logout }}>
+      <AuthContext.Provider value={{ user, login, register, logout, updateCurrentUser }}>
          {children}
       </AuthContext.Provider>
    );
