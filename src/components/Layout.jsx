@@ -5,6 +5,7 @@ import {
    SearchOutlined,
    UserOutlined,
    LogoutOutlined,
+   PlusOutlined,
 } from '@ant-design/icons';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
@@ -23,6 +24,7 @@ const Layout = () => {
 
    const menuItems = [
       { key: '/', icon: <HomeOutlined />, label: 'Главная' },
+      { key: '/create-skill', icon: <PlusOutlined />, label: 'Создать навык' },
       { key: '/profiles', icon: <SearchOutlined />, label: 'Пользователи' },
    ];
 
