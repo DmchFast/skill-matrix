@@ -20,13 +20,15 @@ const TakeTest = () => {
 
    if (!skill) return <div>Навык не найден</div>;
 
-   // Проверка лимита попыток доп проверка как в SkillDetail
+   // Проверка лимита попыток
    const userAttempts = skill.attempts?.filter(a => a.userId === user?.id).length || 0;
    const maxAttempts = skill.maxAttempts || 1;
    if (userAttempts >= maxAttempts && !submitted) {
       return (
          <div>
-            <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>Назад</Button>
+            <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>
+               Назад
+            </Button>
             <Card style={{ borderRadius: 16, textAlign: 'center' }}>
                <Title level={3}>Лимит попыток исчерпан</Title>
                <Text>Вы использовали все {maxAttempts} попыток для этого теста.</Text>
@@ -57,7 +59,6 @@ const TakeTest = () => {
       });
       setScore(correct);
       setSubmitted(true);
-
       const newAttempt = {
          userId: user.id,
          score: correct,
@@ -70,13 +71,15 @@ const TakeTest = () => {
    if (submitted) {
       return (
          <div>
-            <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>Назад</Button>
+            <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>
+               Назад
+            </Button>
             <Card style={{ borderRadius: 16, textAlign: 'center' }}>
                <Title level={3}>Результат теста</Title>
                <Text>Вы ответили правильно на {score} из {skill.questions.length} вопросов.</Text>
                <div style={{ marginTop: 24 }}>
-                  <Button type="primary" onClick={() => navigate('/')}>
-                     На главную
+                  <Button type="primary" onClick={() => navigate(`/skills/${skill.id}`)}>
+                     Вернуться к навыку
                   </Button>
                </div>
             </Card>
@@ -86,7 +89,9 @@ const TakeTest = () => {
 
    return (
       <div>
-         <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>Назад</Button>
+         <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>
+            Назад
+         </Button>
          <Title level={2}>Тест: {skill.title}</Title>
          <Card style={{ borderRadius: 16 }}>
             {skill.questions.map((q, idx) => (
