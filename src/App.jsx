@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Profiles from './pages/Profiles';
+import ProfileDetail from './pages/ProfileDetail';
 import SkillDetail from './pages/SkillDetail';
 import CreateSkill from './pages/CreateSkill';
 import TakeTest from './pages/TakeTest';
@@ -13,6 +14,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="profiles" element={<Profiles />} />
+        <Route path="profiles/:id" element={<ProfileDetail />} />
         <Route path="skills/:id" element={<SkillDetail />} />
         <Route
           path="create-skill"
