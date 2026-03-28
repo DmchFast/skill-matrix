@@ -42,7 +42,7 @@ export const mockUsers = [
 
 export const mockSkills = [
    {
-      id: 101,
+      id: 1,
       title: 'React Basics',
       description: 'Изучите основы React: компоненты, состояние, хуки.',
       authorId: 1,
@@ -65,7 +65,7 @@ export const mockSkills = [
       attempts: [{ userId: 2, score: 1, date: '2026-03-01' }],
    },
    {
-      id: 102,
+      id: 2,
       title: 'UI/UX Fundamentals',
       description: 'Основы проектирования пользовательских интерфейсов.',
       authorId: 3,
@@ -80,5 +80,22 @@ export const mockSkills = [
          },
       ],
       attempts: [{ userId: 1, score: 1, date: '2026-03-10' }],
+   },
+   {
+      id: 3,
+      title: 'TypeScript для начинающих',
+      description: 'Изучите строгую типизацию в JavaScript.',
+      authorId: 2,
+      createdAt: '2026-04-05T14:00:00Z',
+      views: 340,
+      questions: [
+         {
+            id: 1,
+            text: 'Какой символ используется для объявления типа в TypeScript?',
+            options: [':', '=', '=>', '::'],
+            correct: 0,
+         },
+      ],
+      attempts: [],
    },
 ];

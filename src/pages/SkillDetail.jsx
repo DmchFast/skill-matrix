@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, Button, Typography, Tag, List, message } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
@@ -10,9 +10,17 @@ const { Title, Text } = Typography;
 const SkillDetail = () => {
    const { id } = useParams();
    const navigate = useNavigate();
-   const { getSkill } = useContext(DataContext);
+   const { getSkill, incrementSkillViews, users } = useContext(DataContext);
    const { user } = useContext(AuthContext);
    const skill = getSkill(parseInt(id));
+   const author = users.find(u => u.id === skill?.authorId);
+   const [isModalOpen, setIsModalOpen] = useState(false);
+
+   useEffect(() => {
+      if (skill) {
+         incrementSkillViews(skill.id);
+      }
+   }, [skill]);
 
    if (!skill) {
       return (
@@ -42,7 +50,7 @@ const SkillDetail = () => {
          </Button>
          <Card style={{ borderRadius: 16, marginBottom: 24 }}>
             <Title level={2}>{skill.title}</Title>
-            <Text type="secondary">Автор ID: {skill.authorId}</Text>
+            <Text type="secondary">Автор: {author ? author.username : `ID ${skill.authorId}`}</Text>
             <div style={{ marginTop: 16 }}>
                <Text>{skill.description}</Text>
             </div>
@@ -95,13 +103,16 @@ const SkillDetail = () => {
             <Card title="Попытки прохождения" style={{ borderRadius: 16 }}>
                <List
                   dataSource={skill.attempts}
-                  renderItem={attempt => (
-                     <List.Item>
-                        <Text>Пользователь ID: {attempt.userId}</Text>
-                        <Text style={{ marginLeft: 16 }}>Результат: {attempt.score} / {skill.questions.length}</Text>
-                        <Text style={{ marginLeft: 16 }}>Дата: {new Date(attempt.date).toLocaleDateString()}</Text>
-                     </List.Item>
-                  )}
+                  renderItem={attempt => {
+                     const attemptUser = users.find(u => u.id === attempt.userId);
+                     return (
+                        <List.Item>
+                           <Text>Пользователь: {attemptUser ? attemptUser.username : `ID ${attempt.userId}`}</Text>
+                           <Text style={{ marginLeft: 16 }}>Результат: {attempt.score} / {skill.questions.length}</Text>
+                           <Text style={{ marginLeft: 16 }}>Дата: {new Date(attempt.date).toLocaleDateString()}</Text>
+                        </List.Item>
+                     );
+                  }}
                   locale={{ emptyText: 'Пока никто не проходил этот тест' }}
                />
             </Card>
