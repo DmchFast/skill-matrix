@@ -5,18 +5,15 @@ export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
    const [skills, setSkills] = useState([]);
-   const [users, setUsers] = useState(mockUsers);
+   const [users, setUsers] = useState([]);
 
    useEffect(() => {
       setSkills(mockSkills);
+      setUsers(mockUsers);
    }, []);
 
    const addSkill = (skill) => {
       setSkills(prev => [...prev, skill]);
-   };
-
-   const getSkill = (id) => {
-      return skills.find(s => s.id === id);
    };
 
    const updateSkill = (id, updated) => {
@@ -33,10 +30,6 @@ export const DataProvider = ({ children }) => {
 
    const deleteUser = (id) => {
       setUsers(prev => prev.filter(u => u.id !== id));
-   };
-
-   const incrementSkillViews = (id) => {
-      setSkills(prev => prev.map(s => s.id === id ? { ...s, views: (s.views || 0) + 1 } : s));
    };
 
    const followUser = (currentUserId, targetUserId) => {
@@ -70,7 +63,7 @@ export const DataProvider = ({ children }) => {
    return (
       <DataContext.Provider value={{
          skills, users,
-         addSkill, getSkill, updateSkill, deleteSkill, incrementSkillViews,
+         addSkill, updateSkill, deleteSkill,
          updateUser, deleteUser,
          followUser, unfollowUser,
       }}>
