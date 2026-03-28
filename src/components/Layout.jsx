@@ -114,12 +114,14 @@ const Layout = () => {
                   {!user ? (
                      <>
                         <Button
+                           className="header-auth-btn"
                            style={{ background: '#4D8AF1', color: '#fff', border: 'none', borderRadius: '8px', width: '140px', fontWeight: 'bold' }}
                            onClick={() => setIsLoginModalOpen(true)}
                         >
                            Вход
                         </Button>
                         <Button
+                           className="header-reg-btn"
                            style={{ background: '#599996', color: '#fff', border: 'none', borderRadius: '8px', width: '140px', fontWeight: 'bold' }}
                            onClick={() => setIsRegisterModalOpen(true)}
                         >
