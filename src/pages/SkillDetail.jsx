@@ -28,7 +28,7 @@ const SkillDetail = () => {
    }
 
    const handleStartTest = () => {
-      message.info('Функция прохождения теста будет добавлена в следующем коммите');
+      navigate(`/skills/${skill.id}/test`);
    };
 
    const userAttempts = skill.attempts?.filter(a => a.userId === user?.id).length || 0;

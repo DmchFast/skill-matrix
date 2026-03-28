@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Profiles from './pages/Profiles';
 import SkillDetail from './pages/SkillDetail';
 import CreateSkill from './pages/CreateSkill';
+import TakeTest from './pages/TakeTest';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
@@ -18,6 +19,14 @@ function App() {
           element={
             <PrivateRoute>
               <CreateSkill />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="skills/:id/test"
+          element={
+            <PrivateRoute>
+              <TakeTest />
             </PrivateRoute>
           }
         />
