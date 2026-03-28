@@ -43,8 +43,17 @@ html, body, #root {
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 .skill-card .skill-description {
   flex: 1;
   margin-bottom: 12px;
+}
+.user-bio {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
+  height: 2.8em;
 }
