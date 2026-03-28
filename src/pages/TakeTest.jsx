@@ -10,9 +10,9 @@ const { Title, Text } = Typography;
 const TakeTest = () => {
    const { id } = useParams();
    const navigate = useNavigate();
-   const { getSkill, updateSkill } = useContext(DataContext);
+   const { skills, updateSkill } = useContext(DataContext);
    const { user } = useContext(AuthContext);
-   const skill = getSkill(parseInt(id));
+   const skill = skills.find(s => s.id === parseInt(id));
 
    const [answers, setAnswers] = useState({});
    const [submitted, setSubmitted] = useState(false);
@@ -21,14 +21,12 @@ const TakeTest = () => {
    if (!skill) return <div>Навык не найден</div>;
 
    // Проверка лимита попыток
-   const userAttempts = skill.attempts?.filter(a => a.userId === user?.id).length || 0;
+   const userAttempts = skill.attempts.filter(a => a.userId === user?.id).length;
    const maxAttempts = skill.maxAttempts || 1;
    if (userAttempts >= maxAttempts && !submitted) {
       return (
          <div>
-            <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>
-               Назад
-            </Button>
+            <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>Назад</Button>
             <Card style={{ borderRadius: 16, textAlign: 'center' }}>
                <Title level={3}>Лимит попыток исчерпан</Title>
                <Text>Вы использовали все {maxAttempts} попыток для этого теста.</Text>
@@ -64,22 +62,20 @@ const TakeTest = () => {
          score: correct,
          date: new Date().toISOString(),
       };
-      updateSkill(skill.id, { attempts: [...(skill.attempts || []), newAttempt] });
+      updateSkill(skill.id, { attempts: [...skill.attempts, newAttempt] });
       message.success(`Тест завершён! Ваш результат: ${correct} из ${skill.questions.length}`);
    };
 
    if (submitted) {
       return (
          <div>
-            <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>
-               Назад
-            </Button>
+            <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>Назад</Button>
             <Card style={{ borderRadius: 16, textAlign: 'center' }}>
                <Title level={3}>Результат теста</Title>
                <Text>Вы ответили правильно на {score} из {skill.questions.length} вопросов.</Text>
                <div style={{ marginTop: 24 }}>
-                  <Button type="primary" onClick={() => navigate(`/skills/${skill.id}`)}>
-                     Вернуться к навыку
+                  <Button type="primary" onClick={() => navigate('/')}>
+                     На главную
                   </Button>
                </div>
             </Card>
@@ -89,9 +85,7 @@ const TakeTest = () => {
 
    return (
       <div>
-         <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>
-            Назад
-         </Button>
+         <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} style={{ marginBottom: 24 }}>Назад</Button>
          <Title level={2}>Тест: {skill.title}</Title>
          <Card style={{ borderRadius: 16 }}>
             {skill.questions.map((q, idx) => (
