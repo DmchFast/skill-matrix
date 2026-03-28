@@ -129,13 +129,10 @@ html, body, #root {
 .ant-btn.header-reg-btn:hover {
   border-color: transparent !important;
   color: #fff !important;
-  opacity: 0.9;
-}
-.ant-btn.header-auth-btn:hover {
-  background: #4D8AF1 !important;
+  background: #337637 !important;
 }
 .ant-btn.header-reg-btn:hover {
-  background: #599996 !important;
+  background: #457574 !important;
 }
 
 /* Испр "Подробнее" на карточках */

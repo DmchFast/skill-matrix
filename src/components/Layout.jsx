@@ -1,12 +1,12 @@
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { Layout as AntLayout, Menu, Button, Typography, Modal, Form, Input, message, Avatar } from 'antd';
+import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
+import { Layout as AntLayout, Menu, Button, Typography, ConfigProvider, Modal, Form, Input, message, Avatar } from 'antd';
 import {
    HomeOutlined,
    SearchOutlined,
-   UserOutlined,
-   LogoutOutlined,
-   PlusOutlined,
    RadarChartOutlined,
+   UserOutlined,
+   PlusOutlined,
+   LogoutOutlined,
 } from '@ant-design/icons';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
@@ -23,7 +23,6 @@ const Layout = () => {
    const [loginForm] = Form.useForm();
    const [registerForm] = Form.useForm();
 
-   // Формируем пункты меню в зависимости от авторизации
    const getMenuItems = () => {
       const items = [
          { key: '/', icon: <HomeOutlined />, label: 'Главная' },
@@ -72,25 +71,37 @@ const Layout = () => {
    return (
       <AntLayout style={{ height: '100vh', overflow: 'hidden' }}>
          <Sider width={240} style={{ background: '#2B3743' }}>
-            <div style={{ padding: '24px 20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ padding: '52px 20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                <HomeOutlined style={{ color: '#fff', fontSize: '24px' }} />
-               <Text style={{ color: '#fff', fontSize: '18px', fontWeight: 'bold' }}>SkillMatrix</Text>
+               <Text style={{ color: '#fff', fontSize: '28px', fontWeight: 'bold' }}>SkillsMatrix</Text>
             </div>
 
-            <Menu
-               theme="dark"
-               mode="inline"
-               selectedKeys={[location.pathname]}
-               items={getMenuItems()}
-               onClick={({ key }) => navigate(key)}
-               style={{ borderRight: 0 }}
-            />
+            <ConfigProvider
+               theme={{
+                  components: {
+                     Menu: {
+                        darkItemBg: '#2B3743',
+                        darkItemSelectedBg: '#445161',
+                        darkItemHoverBg: '#3A4755',
+                     },
+                  },
+               }}
+            >
+               <Menu
+                  theme="dark"
+                  mode="inline"
+                  selectedKeys={[location.pathname]}
+                  items={getMenuItems()}
+                  onClick={({ key }) => navigate(key)}
+                  style={{ borderRight: 0 }}
+               />
+            </ConfigProvider>
          </Sider>
 
          <AntLayout>
             <Header
                style={{
-                  background: '#2B3743',
+                  background: '#384858',
                   height: 'auto',
                   padding: '30px 40px',
                   display: 'flex',
@@ -102,10 +113,22 @@ const Layout = () => {
                }}
             >
                <div>
-                  <Title level={1} style={{ color: '#FFFFFF', margin: 0, fontSize: '32px' }}>
+                  <Title level={1} style={{ 
+                     margin: '4px 0 0', 
+                     fontSize: '48px', 
+                     fontWeight: 800,
+                     color: '#E0E8FF',
+                     letterSpacing: '1px'
+                  }}>
                      {user ? `Добро пожаловать, ${user.username}!` : 'Зарегистрируйся'}
                   </Title>
-                  <Title level={2} style={{ color: '#FFFFFF', margin: 0, fontSize: '20px', fontWeight: 'normal' }}>
+                  <Title level={2} style={{ 
+                     margin: '4px 0 0', 
+                     fontSize: '24px', 
+                     fontWeight: 400, 
+                     color: '#E0E8FF',
+                     letterSpacing: '1px'
+                  }}>
                      раскрой свой потенциал
                   </Title>
                </div>
@@ -115,7 +138,7 @@ const Layout = () => {
                      <>
                         <Button
                            className="header-auth-btn"
-                           style={{ background: '#4D8AF1', color: '#fff', border: 'none', borderRadius: '8px', width: '140px', fontWeight: 'bold' }}
+                           style={{ background: '#45a049', color: '#fff', border: 'none', borderRadius: '8px', width: '140px', fontWeight: 'bold' }}
                            onClick={() => setIsLoginModalOpen(true)}
                         >
                            Вход
@@ -130,11 +153,25 @@ const Layout = () => {
                      </>
                   ) : (
                      <>
-                        <Avatar icon={<UserOutlined />} style={{ backgroundColor: '#3D8086' }} />
-                        <Button
-                           icon={<LogoutOutlined />}
-                           onClick={handleLogout}
-                           type="text"
+                        <Link to="/my-profile">
+                           <Avatar 
+                              icon={<UserOutlined />} 
+                              style={{ 
+                                 backgroundColor: '#3D8086',
+                                 cursor: 'pointer',
+                                 transition: 'opacity 0.2s',
+                                 display: 'flex',
+                                 alignItems: 'center',
+                                 justifyContent: 'center'
+                              }}
+                              onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
+                              onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                           />
+                        </Link>
+                        <Button 
+                           icon={<LogoutOutlined />} 
+                           onClick={handleLogout} 
+                           type="text" 
                            style={{ color: '#fff', fontSize: '20px' }}
                         />
                      </>
@@ -143,30 +180,38 @@ const Layout = () => {
             </Header>
 
             <Content
+               className="custom-scroll"
                style={{
                   background: '#F1F2F6',
                   padding: '30px 40px',
                   overflowY: 'auto',
                   height: '100%',
                }}
-               className="custom-scroll"
             >
                <Outlet />
             </Content>
          </AntLayout>
 
-         <Modal
-            title="Вход"
-            open={isLoginModalOpen}
-            onCancel={() => setIsLoginModalOpen(false)}
+         <Modal 
+            title="Вход" 
+            open={isLoginModalOpen} 
+            onCancel={() => setIsLoginModalOpen(false)} 
             footer={null}
             centered
          >
             <Form form={loginForm} onFinish={handleLogin} layout="vertical">
-               <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
+               <Form.Item 
+                  name="email" 
+                  label="Email" 
+                  rules={[{ required: true, message: 'Введите email' }, { type: 'email', message: 'Введите корректный email' }]}
+               >
                   <Input />
                </Form.Item>
-               <Form.Item name="password" label="Пароль" rules={[{ required: true }]}>
+               <Form.Item 
+                  name="password" 
+                  label="Пароль" 
+                  rules={[{ required: true, message: 'Введите пароль' }]}
+               >
                   <Input.Password />
                </Form.Item>
                <Form.Item>
@@ -177,21 +222,33 @@ const Layout = () => {
             </Form>
          </Modal>
 
-         <Modal
-            title="Регистрация"
-            open={isRegisterModalOpen}
-            onCancel={() => setIsRegisterModalOpen(false)}
+         <Modal 
+            title="Регистрация" 
+            open={isRegisterModalOpen} 
+            onCancel={() => setIsRegisterModalOpen(false)} 
             footer={null}
             centered
          >
             <Form form={registerForm} onFinish={handleRegister} layout="vertical">
-               <Form.Item name="username" label="Имя пользователя" rules={[{ required: true }]}>
+               <Form.Item 
+                  name="username" 
+                  label="Имя пользователя" 
+                  rules={[{ required: true, message: 'Введите имя пользователя' }]}
+               >
                   <Input />
                </Form.Item>
-               <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
+               <Form.Item 
+                  name="email" 
+                  label="Email" 
+                  rules={[{ required: true, message: 'Введите email' }, { type: 'email', message: 'Введите корректный email' }]}
+               >
                   <Input />
                </Form.Item>
-               <Form.Item name="password" label="Пароль" rules={[{ required: true, min: 6 }]}>
+               <Form.Item 
+                  name="password" 
+                  label="Пароль" 
+                  rules={[{ required: true, message: 'Введите пароль' }, { min: 6, message: 'Пароль должен содержать не менее 6 символов' }]}
+               >
                   <Input.Password />
                </Form.Item>
                <Form.Item>
