@@ -88,7 +88,7 @@ const ProfileDetail = () => {
             <div style={{ marginTop: 24 }}>
                {!isCurrentUser && currentUser && (
                   isFollowed ? (
-                     <Button onClick={handleUnfollow}>Отписаться</Button>
+                     <Button  className="unfollow-btn" onClick={handleUnfollow}>Отписаться</Button>
                   ) : (
                      <Button type="primary" onClick={handleFollow} style={{ background: '#13A810' }}>
                         Подписаться
