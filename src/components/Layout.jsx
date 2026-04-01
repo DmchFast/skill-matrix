@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import RegisterModal from './modals/RegisterModal';
 
 const { Header, Sider, Content } = AntLayout;
 const { Title, Text } = Typography;
@@ -21,7 +22,7 @@ const Layout = () => {
    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
    const [loginForm] = Form.useForm();
-   const [registerForm] = Form.useForm();
+
 
    const getMenuItems = () => {
       const items = [
@@ -51,15 +52,15 @@ const Layout = () => {
       }
    };
 
-   const handleRegister = async (values) => {
-      const success = await register(values.username, values.email, values.password);
+   const handleRegister = async (username, email, password) => {
+      const success = await register(username, email, password);
       if (success) {
-         setIsRegisterModalOpen(false);
-         registerForm.resetFields();
          message.success('Регистрация успешна');
+         setIsRegisterModalOpen(false);
       } else {
          message.error('Пользователь с таким email уже существует');
       }
+      return success;
    };
 
    const handleLogout = () => {
@@ -222,42 +223,11 @@ const Layout = () => {
             </Form>
          </Modal>
 
-         <Modal 
-            title="Регистрация" 
-            open={isRegisterModalOpen} 
-            onCancel={() => setIsRegisterModalOpen(false)} 
-            footer={null}
-            centered
-         >
-            <Form form={registerForm} onFinish={handleRegister} layout="vertical">
-               <Form.Item 
-                  name="username" 
-                  label="Имя пользователя" 
-                  rules={[{ required: true, message: 'Введите имя пользователя' }]}
-               >
-                  <Input />
-               </Form.Item>
-               <Form.Item 
-                  name="email" 
-                  label="Email" 
-                  rules={[{ required: true, message: 'Введите email' }, { type: 'email', message: 'Введите корректный email' }]}
-               >
-                  <Input />
-               </Form.Item>
-               <Form.Item 
-                  name="password" 
-                  label="Пароль" 
-                  rules={[{ required: true, message: 'Введите пароль' }, { min: 6, message: 'Пароль должен содержать не менее 6 символов' }]}
-               >
-                  <Input.Password />
-               </Form.Item>
-               <Form.Item>
-                  <Button type="primary" htmlType="submit" block style={{ background: '#599996' }}>
-                     Зарегистрироваться
-                  </Button>
-               </Form.Item>
-            </Form>
-         </Modal>
+         <RegisterModal
+            open={isRegisterModalOpen}
+            onCancel={() => setIsRegisterModalOpen(false)}
+            onRegister={handleRegister}
+         />
       </AntLayout>
    );
 };
