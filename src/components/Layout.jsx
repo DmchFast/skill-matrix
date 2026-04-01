@@ -11,6 +11,7 @@ import {
 import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import RegisterModal from './modals/RegisterModal';
+import LoginModal from './modals/LoginModal';
 
 const { Header, Sider, Content } = AntLayout;
 const { Title, Text } = Typography;
@@ -21,6 +22,7 @@ const Layout = () => {
    const location = useLocation();
    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+
    const [loginForm] = Form.useForm();
 
 
@@ -41,9 +43,10 @@ const Layout = () => {
       return items;
    };
 
-   const handleLogin = async (values) => {
-      const success = await login(values.email, values.password);
-      if (success) {
+
+      const handleLogin = async (email, password) => {
+         const success = await login(email, password);
+         if (success) {
          setIsLoginModalOpen(false);
          loginForm.resetFields();
          message.success('Вход выполнен');
@@ -114,19 +117,19 @@ const Layout = () => {
                }}
             >
                <div>
-                  <Title level={1} style={{ 
-                     margin: '4px 0 0', 
-                     fontSize: '48px', 
+                  <Title level={1} style={{
+                     margin: '4px 0 0',
+                     fontSize: '48px',
                      fontWeight: 800,
                      color: '#E0E8FF',
                      letterSpacing: '1px'
                   }}>
                      {user ? `Добро пожаловать, ${user.username}!` : 'Зарегистрируйся'}
                   </Title>
-                  <Title level={2} style={{ 
-                     margin: '4px 0 0', 
-                     fontSize: '24px', 
-                     fontWeight: 400, 
+                  <Title level={2} style={{
+                     margin: '4px 0 0',
+                     fontSize: '24px',
+                     fontWeight: 400,
                      color: '#E0E8FF',
                      letterSpacing: '1px'
                   }}>
@@ -155,9 +158,9 @@ const Layout = () => {
                   ) : (
                      <>
                         <Link to="/my-profile">
-                           <Avatar 
-                              icon={<UserOutlined />} 
-                              style={{ 
+                           <Avatar
+                              icon={<UserOutlined />}
+                              style={{
                                  backgroundColor: '#3D8086',
                                  cursor: 'pointer',
                                  transition: 'opacity 0.2s',
@@ -169,10 +172,10 @@ const Layout = () => {
                               onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
                            />
                         </Link>
-                        <Button 
-                           icon={<LogoutOutlined />} 
-                           onClick={handleLogout} 
-                           type="text" 
+                        <Button
+                           icon={<LogoutOutlined />}
+                           onClick={handleLogout}
+                           type="text"
                            style={{ color: '#fff', fontSize: '20px' }}
                         />
                      </>
@@ -193,35 +196,13 @@ const Layout = () => {
             </Content>
          </AntLayout>
 
-         <Modal 
-            title="Вход" 
-            open={isLoginModalOpen} 
-            onCancel={() => setIsLoginModalOpen(false)} 
-            footer={null}
-            centered
-         >
-            <Form form={loginForm} onFinish={handleLogin} layout="vertical">
-               <Form.Item 
-                  name="email" 
-                  label="Email" 
-                  rules={[{ required: true, message: 'Введите email' }, { type: 'email', message: 'Введите корректный email' }]}
-               >
-                  <Input />
-               </Form.Item>
-               <Form.Item 
-                  name="password" 
-                  label="Пароль" 
-                  rules={[{ required: true, message: 'Введите пароль' }]}
-               >
-                  <Input.Password />
-               </Form.Item>
-               <Form.Item>
-                  <Button type="primary" htmlType="submit" block style={{ background: '#4D8AF1' }}>
-                     Войти
-                  </Button>
-               </Form.Item>
-            </Form>
-         </Modal>
+
+         <LoginModal
+            open={isLoginModalOpen}
+            onCancel={() => setIsLoginModalOpen(false)}
+            onLogin={handleLogin}
+         />
+
 
          <RegisterModal
             open={isRegisterModalOpen}
