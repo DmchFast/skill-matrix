@@ -1,4 +1,7 @@
 import { Modal, Form, Input, Button, Divider, Typography, message } from 'antd';
+import GoogleIcon from '../../assets/Google.svg';
+import YandexIcon from '../../assets/Yandex.svg';
+import GithubIcon from '../../assets/Github.svg';
 
 const { Title, Text } = Typography;
 
@@ -71,23 +74,32 @@ const LoginModal = ({ open, onCancel, onLogin }) => {
 
          <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 24 }}>
             <Button
+               className='img-icon'
                shape="circle"
                size="large"
                style={{ backgroundColor: '#f5f5f5', border: 'none', padding: 0 }}
-               onClick={() => message.info('Вход через Google')}
-            />
+               onClick={() => message.info('Регистрация через Google временно не доступна')}
+            >
+               <img src={GoogleIcon} alt="Google" style={{ width: 20, height: 20 }} />
+            </Button>
             <Button
+               className='img-icon'
                shape="circle"
                size="large"
                style={{ backgroundColor: '#f5f5f5', border: 'none', padding: 0 }}
-               onClick={() => message.info('Вход через Яндекс')}
-            />
+               onClick={() => message.info('Регистрация через Яндекс временно не доступна')}
+            >
+               <img src={YandexIcon} alt="Яндекс" style={{ width: 20, height: 20 }} />
+            </Button>
             <Button
+               className='img-icon'
                shape="circle"
                size="large"
                style={{ backgroundColor: '#f5f5f5', border: 'none', padding: 0 }}
-               onClick={() => message.info('Вход через GitHub')}
-            />
+               onClick={() => message.info('Регистрация через GitHub временно не доступна')}
+            >
+               <img src={GithubIcon} alt="GitHub" style={{ width: 20, height: 20 }} />
+            </Button>
          </div>
 
          <Text
