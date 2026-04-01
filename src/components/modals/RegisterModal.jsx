@@ -91,7 +91,7 @@ const RegisterModal = ({ open, onCancel, onRegister }) => {
                style={{ backgroundColor: '#f5f5f5', border: 'none' }}
                onClick={() => message.info('Регистрация через Google временно не доступна')}
             >
-               <img src={GithubIcon} alt="GitHub" style={{ width: 20, height: 20 }} />
+               <img src={GoogleIcon} alt="Google" style={{ width: 20, height: 20 }} />
             </Button>
 
             <Button
