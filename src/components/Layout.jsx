@@ -12,6 +12,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import RegisterModal from './modals/RegisterModal';
 import LoginModal from './modals/LoginModal';
+import SkillsMatrix from '../assets/Logo.png';
 
 const { Header, Sider, Content } = AntLayout;
 const { Title, Text } = Typography;
@@ -76,8 +77,9 @@ const Layout = () => {
       <AntLayout style={{ height: '100vh', overflow: 'hidden' }}>
          <Sider width={240} style={{ background: '#2B3743' }}>
             <div style={{ padding: '52px 20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-               <HomeOutlined style={{ color: '#fff', fontSize: '24px' }} />
-               <Text style={{ color: '#fff', fontSize: '28px', fontWeight: 'bold' }}>SkillsMatrix</Text>
+               {/* <HomeOutlined style={{ color: '#fff', fontSize: '24px' }} /> */}
+                  <img src={SkillsMatrix} alt="SkillsMatrix" style={{ width: 50, height: 50 }} />
+               <Text style={{ color: '#fff', fontSize: '25px', fontWeight: 'bold' }}>SkillsMatrix</Text>
             </div>
 
             <ConfigProvider
@@ -118,11 +120,14 @@ const Layout = () => {
             >
                <div>
                   <Title level={1} style={{
-                     margin: '4px 0 0',
+                     margin: 0,
                      fontSize: '48px',
                      fontWeight: 800,
-                     color: '#E0E8FF',
-                     letterSpacing: '1px'
+                     background: 'linear-gradient(135deg, #FFFFFF 0%, #A0C0F0 100%)',
+                     backgroundClip: 'text',
+                     WebkitBackgroundClip: 'text',
+                     color: 'transparent',
+                     textShadow: '0 2px 4px rgba(0,0,0,0.1)'
                   }}>
                      {user ? `Добро пожаловать, ${user.username}!` : 'Зарегистрируйся'}
                   </Title>
@@ -137,7 +142,7 @@ const Layout = () => {
                   </Title>
                </div>
 
-               <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+               <div style={{ display: 'grid', gap: '16px', alignItems: 'center' }}>
                   {!user ? (
                      <>
                         <Button
