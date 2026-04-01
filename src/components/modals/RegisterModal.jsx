@@ -1,4 +1,7 @@
 import { Modal, Form, Input, Button, Divider, Typography, message } from 'antd';
+import GoogleIcon from '../../assets/Google.svg';
+import YandexIcon from '../../assets/Yandex.svg';
+import GithubIcon from '../../assets/Github.svg';
 
 const { Title, Text } = Typography;
 
@@ -81,25 +84,34 @@ const RegisterModal = ({ open, onCancel, onRegister }) => {
          <Divider style={{ margin: '16px 0', color: '#8c8c8c' }}>или продолжить с</Divider>
 
          <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 24 }}>
-            <Button 
+            <Button
+               className='img-icon'
                shape="circle"
                size="large"
                style={{ backgroundColor: '#f5f5f5', border: 'none' }}
                onClick={() => message.info('Регистрация через Google временно не доступна')}
-            />
+            >
+               <img src={GithubIcon} alt="GitHub" style={{ width: 20, height: 20 }} />
+            </Button>
 
             <Button
+               className='img-icon'
                shape="circle"
                size="large"
                style={{ backgroundColor: '#f5f5f5', border: 'none', fontSize: 18 }}
                onClick={() => message.info('Регистрация через Яндекс временно не доступна')}
-            />
+            >
+               <img src={YandexIcon} alt="Яндекс" style={{ width: 20, height: 20 }} />
+            </Button>
             <Button
+               className='img-icon'
                shape="circle"
                size="large"
                style={{ backgroundColor: '#f5f5f5', border: 'none' }}
                onClick={() => message.info('Регистрация через GitHub временно не доступна')}
-            />
+            >
+               <img src={GithubIcon} alt="GitHub" style={{ width: 20, height: 20 }} />
+            </Button>
          </div>
 
          <Text
